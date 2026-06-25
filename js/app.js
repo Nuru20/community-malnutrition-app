@@ -1,3 +1,16 @@
+// ── SUPABASE CONNECTION ───────────────────
+// ── SUPABASE ──────────────────────────────
+const SUPABASE_URL = '';
+const SUPABASE_KEY = '';
+let db = null;
+try {
+  db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+} catch(e) {
+  console.log('Supabase not configured');
+}
+
+
+
 // state
 const state = {
   sex:     null,
@@ -125,23 +138,113 @@ function showResult(result, inputs) {
 
   // advice
   document.getElementById('adviceText').textContent = result.advice;
+
+  lastPrediction = result;
+  lastInputs = inputs;
+
+  // show referral question
+  document.getElementById('referralSection').style.display = 'block';
 }
 
 // reset for next child
 function resetForm() {
-  // clear inputs
-  document.getElementById('age').value  = '';
-  document.getElementById('muac').value = '';
+  document.getElementById('age').value      = '';
+  document.getElementById('muac').value     = '';
+  document.getElementById('district').value = '';
+  document.getElementById('vhtcode').value  = '';
 
-  // clear state
-  state.sex = state.reads = state.dist = state.children = null;
+  state.sex = state.reads = state.dist = state.children = state.referral = null;
 
-  // clear button styles
   document.querySelectorAll('.toggle-btn, .count-btn')
-    .forEach(btn => btn.classList.remove('active'));
+    .forEach(b => b.classList.remove('active'));
 
-  // show form, hide result
   document.getElementById('formScreen').style.display   = 'block';
   document.getElementById('resultScreen').style.display = 'none';
+  document.getElementById('referralSection').style.display = 'none';
+
+  lastPrediction = null;
+  lastInputs = null;
+
   window.scrollTo(0, 0);
 }
+
+// ── SAVE SCREENING TO DATABASE ────────────
+async function saveScreening() {
+  if (!lastPrediction || !lastInputs) return;
+
+  const record = {
+    district:        document.getElementById('district').value || 'Unknown',
+    village:         '',
+    vht_code:        document.getElementById('vhtcode').value || 'Anonymous',
+    age_months:      lastInputs.age_months,
+    sex:             lastInputs.sex,
+    muac_mm:         lastInputs.muac,
+    mother_reads:    lastInputs.mother_reads === 1,
+    children_u5:     lastInputs.children_u5,
+    far_from_clinic: lastInputs.far_from_clinic === 1,
+    risk_level:      lastPrediction.risk,
+    risk_probability: lastPrediction.probability,
+    muac_override:   lastPrediction.override || 'none',
+    referral_made:   state.referral === true,
+    app_version:     'vht-v1',
+  };
+
+  try {
+    const { error } = await db.from('screenings').insert(record);
+    if (error) throw error;
+
+    // show success message
+    alert('✓ Screening saved successfully');
+
+    // reset for next child
+    resetForm();
+
+  } catch (err) {
+    console.error('Save failed:', err);
+
+    // save locally if offline
+    saveLocally(record);
+    alert('Saved locally — will sync when online');
+    resetForm();
+  }
+}
+
+// ── LOCAL STORAGE BACKUP (offline) ────────
+function saveLocally(record) {
+  const pending = JSON.parse(
+    localStorage.getItem('pending_screenings') || '[]'
+  );
+  pending.push({ ...record, saved_at: new Date().toISOString() });
+  localStorage.setItem('pending_screenings', JSON.stringify(pending));
+  console.log(`Saved locally. Pending: ${pending.length}`);
+}
+
+// sync pending records when back online
+async function syncPending() {
+  const pending = JSON.parse(
+    localStorage.getItem('pending_screenings') || '[]'
+  );
+  if (pending.length === 0) return;
+
+  console.log(`Syncing ${pending.length} pending screenings...`);
+
+  for (const record of pending) {
+    try {
+      const { error } = await db.from('screenings').insert(record);
+      if (!error) {
+        // remove from pending
+        const remaining = JSON.parse(
+          localStorage.getItem('pending_screenings') || '[]'
+        ).filter(r => r.saved_at !== record.saved_at);
+        localStorage.setItem('pending_screenings',
+          JSON.stringify(remaining));
+      }
+    } catch (e) {
+      console.log('Sync failed for record:', e);
+    }
+  }
+  console.log('Sync complete');
+}
+
+// auto sync when internet returns
+window.addEventListener('online', syncPending);
