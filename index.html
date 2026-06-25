@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#1F4E79">
-
-  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <title>Child Nutrition Check</title>
   <link rel="manifest" href="./manifest.json">
@@ -14,175 +12,68 @@
 </head>
 <body>
 
-  <!-- offline indicator -->
   <div class="offline-bar">
     📵  No internet — working offline
   </div>
 
-  <!-- HEADER -->
   <div class="header">
     <h1>🇺🇬  Child Nutrition Check</h1>
     <p>Village Health Team Screening Tool</p>
   </div>
 
-  <!-- ── INPUT FORM ──────────────────────── -->
+  <!-- FORM SCREEN -->
   <div class="form-container" id="formScreen">
 
-    <!-- Field 1: Age -->
     <div class="field">
       <label>Child age (months)</label>
       <p class="hint">How many months old is this child?</p>
-      <input type="number" id="age" min="0" max="59"
-             placeholder="e.g. 24" inputmode="numeric">
+      <input type="number" id="age" min="0" max="59" placeholder="e.g. 24" inputmode="numeric">
     </div>
 
-    <!-- Field 2: Sex -->
-    <div class="field">
-      <label>Sex of child</label>
-      <div class="toggle-group">
-        <button class="toggle-btn" id="btn-boy"
-                onclick="selectToggle('sex', 1, 'btn-boy', 'btn-girl')">
-          👦  Boy
-        </button>
-        <button class="toggle-btn" id="btn-girl"
-                onclick="selectToggle('sex', 2, 'btn-girl', 'btn-boy')">
-          👧  Girl
-        </button>
+
+   </div>
+t type="number" i  <label>Sex of child</label>
+      <div c      <div c     p">
+                                                                                             tn-girl')">👦  Boy</button>
+        <button class="tog        <button class="tog        <bctToggle('sex', 2, 'btn-girl', 'btn-boy')">👧  Girl</button>
       </div>
     </div>
 
-    <!-- Field 3: MUAC -->
-    <div class="field">
-      <label>MUAC measurement (mm)</label>
-      <p class="hint">Measure the left upper arm with the MUAC tape</p>
-      <input type="number" id="muac" min="80" max="200"
-             placeholder="e.g. 128" inputmode="numeric">
+                                     MUA                                     MUA     nt                                     MUA       </         <input type="number" id="muac" min=                                     MUAputmode="numeric">
       <div class="muac-guide">
         <div class="muac-red"></div>
         <div class="muac-yellow"></div>
-        <div class="muac-green"></div>
-      </div>
-      <div class="muac-labels">
-        <span>⚠️ &lt;115mm</span>
-        <span>⚡ 115-125mm</span>
-        <span>✓ &gt;125mm</span>
+        <        <        reen">        <        <        reen">        <    bels">
+        <span>⚠️        <span>⚠️        <span>⚠�5-        <span>⚠️        <span>⚠️        <span>⚠�5>
+        <span>⚠️        <span>⚠️        <span>⚠�5-        <span>⚠️        <span>="toggle-group">
+                                                      o                            , 1, 'btn-reads-yes', 'btn-reads-no')">✓  Yes</button>
+        <button class="toggle-btn" id="btn-reads-no" onclick="selectToggle('reads', 0, 'btn-reads-no', 'btn-reads-yes')">✗  No</button>
       </div>
     </div>
 
-    <!-- Field 4: Mother literacy -->
     <div class="field">
-      <label>Can the mother read?</label>
-      <div class="toggle-group">
-        <button class="toggle-btn" id="btn-reads-yes"
-                onclick="selectToggle('reads', 1, 'btn-reads-yes', 'btn-reads-no')">
-          ✓  Yes
-        </button>
-        <button class="toggle-btn" id="btn-reads-no"
-                onclick="selectToggle('reads', 0, 'btn-reads-no', 'btn-reads-yes')">
-          ✗  No
-        </button>
+      <label>Children under 5 at h      <label>Children under 5 at h      <label>Children under 5 at h      <label>Children under 5 at h      <label>Children under 5 at h      <label>Children under 5 at h      <label>Children under 5 at h      <label>Children under 5 at         <label>Children und oncli      <label>Children under 5 at       <button class="count-btn" onclick="sel      <label>Children under 5 at h      <label>Children under 5 at h      <label>Cab      <label>Children under 5 at h      <label>Children under 5 at h      <label>Children under 5 at h      <label>Chid="btn-near" onclick="selectToggle('dist', 0, 'btn-near', 'btn-far')">🏃  Near (&lt;5km)</button>
+        <butto        <butto        <butto        <butto        <butto        <butto        <butto        <butto        <butto        <butto        <bu</d        <butto        <butto        <butto        <butto        <butto        <butto        <butto        <butto        <butto        lu">        <b>
+
+
+       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla    iv>       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <cla       <label       <cla       <celd">
+        <label>Did you refer this child?</label>
+        <div class="toggle-group">
+          <button class="toggle-btn" id="btn-ref-yes" onclick="selectToggle('referral', true, 'btn-ref-yes', 'btn-ref-no')">✓  Yes — referred</button>
+          <button class="toggle-btn" id="btn-ref-no" onclick="selectToggle('referral', false, 'btn-ref-no', 'btn-ref-yes')">✗  Not referred</button>
+        </div>
       </div>
-    </div>
-
-    <!-- Field 5: Children under 5 -->
-    <div class="field">
-      <label>Children under 5 at home</label>
-      <p class="hint">Including this child</p>
-      <div class="count-group">
-        <button class="count-btn" onclick="selectCount(1)">1</button>
-        <button class="count-btn" onclick="selectCount(2)">2</button>
-        <button class="count-btn" onclick="selectCount(3)">3</button>
-        <button class="count-btn" onclick="selectCount(4)">4+</button>
-      </div>
-    </div>
-
-    <!-- Field 6: Distance to clinic -->
-    <div class="field">
-      <label>How far is the nearest health centre?</label>
-      <div class="toggle-group">
-        <button class="toggle-btn" id="btn-near"
-                onclick="selectToggle('dist', 0, 'btn-near', 'btn-far')">
-          🏃  Near (&lt;5km)
-        </button>
-        <button class="toggle-btn" id="btn-far"
-                onclick="selectToggle('dist', 1, 'btn-far', 'btn-near')">
-          🚶  Far (&gt;5km)
-        </button>
-      </div>
-    </div>
-
-    <!-- Location (optional) -->
-<div class="field">
-  <label>Your district (optional)</label>
-  <input type="text" id="district" placeholder="e.g. Gulu">
-</div>
-
-<div class="field">
-  <label>Your VHT code (optional)</label>
-  <p class="hint">Leave blank if you do not have one</p>
-  <input type="text" id="vhtcode" placeholder="e.g. VHT-001">
-</div>
-
-
-  <!-- ── RESULT SCREEN ───────────────────── -->
-  <div class="result-screen" id="resultScreen">
-
-    <div class="risk-badge" id="riskBadge">
-      <div class="risk-emoji" id="riskEmoji"></div>
-      <div class="risk-label" id="riskLabel"></div>
-      <div class="risk-sub"  id="riskSub"></div>
-    </div>
-
-    <div class="reasons-box">
-      <h3>Main Reasons</h3>
-      <div id="reasonsList"></div>
-    </div>
-
-    <div class="action-box" id="actionBox">
-      <span id="actionText"></span>
-    </div>
-
-    <div class="advice-box">
-      <h3>Tell the Mother</h3>
-      <p id="adviceText"></p>
-    </div>
-
-    <!-- Referral question — shown after prediction -->
-<div id="referralSection" style="display:none">
-  <div class="field">
-    <label>Did you refer this child?</label>
-    <div class="toggle-group">
-      <button class="toggle-btn" id="btn-ref-yes"
-              onclick="selectToggle('referral', true, 'btn-ref-yes', 'btn-ref-no')">
-        ✓  Yes — referred
-      </button>
-      <button class="toggle-btn" id="btn-ref-no"
-              onclick="selectToggle('referral', false, 'btn-ref-no', 'btn-ref-yes')">
-        ✗  Not referred
+      <button class="predict-btn" onclick="saveScreening()" style="background:#16a34a; margin-bottom:12px;">
+        💾  SAVE THIS SCREENING
       </button>
     </div>
-  </div>
-  <button class="predict-btn" onclick="saveScreening()" style="background:#16a34a">
-    💾  SAVE THIS SCREENING
-  </button>
-</div>
-
-    <!-- Predict button -->
-    <button class="predict-btn" onclick="runPrediction()">
-      🔍  CHECK THIS CHILD
-    </button>
-
-  </div><!-- end form -->
-
 
     <button class="new-child-btn" onclick="resetForm()">
-
       ← Screen Another Child
     </button>
 
-  </div><!-- end result -->
+  </div><!-- end resultScreen -->
 
-  <!-- scripts -->
   <script src="./js/config.js"></script>
   <script src="./js/defaults.js"></script>
   <script src="./js/predict.js"></script>
