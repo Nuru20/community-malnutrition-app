@@ -123,7 +123,31 @@
   <input type="text" id="vhtcode" placeholder="e.g. VHT-001">
 </div>
 
-<!-- Referral question — shown after prediction -->
+
+  <!-- ── RESULT SCREEN ───────────────────── -->
+  <div class="result-screen" id="resultScreen">
+
+    <div class="risk-badge" id="riskBadge">
+      <div class="risk-emoji" id="riskEmoji"></div>
+      <div class="risk-label" id="riskLabel"></div>
+      <div class="risk-sub"  id="riskSub"></div>
+    </div>
+
+    <div class="reasons-box">
+      <h3>Main Reasons</h3>
+      <div id="reasonsList"></div>
+    </div>
+
+    <div class="action-box" id="actionBox">
+      <span id="actionText"></span>
+    </div>
+
+    <div class="advice-box">
+      <h3>Tell the Mother</h3>
+      <p id="adviceText"></p>
+    </div>
+
+    <!-- Referral question — shown after prediction -->
 <div id="referralSection" style="display:none">
   <div class="field">
     <label>Did you refer this child?</label>
@@ -150,30 +174,9 @@
 
   </div><!-- end form -->
 
-  <!-- ── RESULT SCREEN ───────────────────── -->
-  <div class="result-screen" id="resultScreen">
-
-    <div class="risk-badge" id="riskBadge">
-      <div class="risk-emoji" id="riskEmoji"></div>
-      <div class="risk-label" id="riskLabel"></div>
-      <div class="risk-sub"  id="riskSub"></div>
-    </div>
-
-    <div class="reasons-box">
-      <h3>Main Reasons</h3>
-      <div id="reasonsList"></div>
-    </div>
-
-    <div class="action-box" id="actionBox">
-      <span id="actionText"></span>
-    </div>
-
-    <div class="advice-box">
-      <h3>Tell the Mother</h3>
-      <p id="adviceText"></p>
-    </div>
 
     <button class="new-child-btn" onclick="resetForm()">
+
       ← Screen Another Child
     </button>
 
