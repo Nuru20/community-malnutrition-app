@@ -4,7 +4,7 @@ let THRESHOLD = 0.491;
 
 // load model from JSON file
 async function loadModel() {
-  const resp = await fetch('/models/vht_model.json');
+  const resp = await fetch('./models/vht_model.json');
   const data = await resp.json();
   MODEL     = data.trees;
   FEATURES  = data.features;
