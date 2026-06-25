@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#1F4E79">
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <title>Child Nutrition Check</title>
   <link rel="manifest" href="./manifest.json">
   <link rel="stylesheet" href="./css/style.css">
@@ -107,6 +110,38 @@
         </button>
       </div>
     </div>
+
+    <!-- Location (optional) -->
+<div class="field">
+  <label>Your district (optional)</label>
+  <input type="text" id="district" placeholder="e.g. Gulu">
+</div>
+
+<div class="field">
+  <label>Your VHT code (optional)</label>
+  <p class="hint">Leave blank if you do not have one</p>
+  <input type="text" id="vhtcode" placeholder="e.g. VHT-001">
+</div>
+
+<!-- Referral question — shown after prediction -->
+<div id="referralSection" style="display:none">
+  <div class="field">
+    <label>Did you refer this child?</label>
+    <div class="toggle-group">
+      <button class="toggle-btn" id="btn-ref-yes"
+              onclick="selectToggle('referral', true, 'btn-ref-yes', 'btn-ref-no')">
+        ✓  Yes — referred
+      </button>
+      <button class="toggle-btn" id="btn-ref-no"
+              onclick="selectToggle('referral', false, 'btn-ref-no', 'btn-ref-yes')">
+        ✗  Not referred
+      </button>
+    </div>
+  </div>
+  <button class="predict-btn" onclick="saveScreening()" style="background:#16a34a">
+    💾  SAVE THIS SCREENING
+  </button>
+</div>
 
     <!-- Predict button -->
     <button class="predict-btn" onclick="runPrediction()">
