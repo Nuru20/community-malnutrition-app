@@ -1,7 +1,5 @@
 // ── SUPABASE CONNECTION ───────────────────
 // ── SUPABASE ──────────────────────────────
-const SUPABASE_URL = '';
-const SUPABASE_KEY = '';
 let db = null;
 try {
   db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
